@@ -201,33 +201,22 @@ p { line-height: 1.65; }
 .brand__dot { color: var(--rose); }
 
 .brand__mark {
+  display: block;
   flex: none;
   align-self: center;
-  width: 3.15rem;
+  width: 3.8rem;
   height: auto;
-  overflow: visible;
   transition: transform .3s var(--ease);
 }
-.brand__mark { fill: none; }
 .brand:hover .brand__mark { transform: rotate(-7deg) translateY(-1px); }
 .brand__word { text-shadow: .06em .06em 0 rgba(193, 139, 101, .28); }
 [data-theme="dark"] .brand__word { text-shadow: .06em .06em 0 rgba(193, 139, 101, .22); }
-.brand__mark-dish { fill: #30202d; stroke: var(--rose); stroke-width: 2.2; stroke-linejoin: round; }
-[data-theme="dark"] .brand__mark-dish { fill: #241a22; }
-.brand__mark-wave { fill: none; stroke: #ede5d8; stroke-width: 1.7; stroke-linecap: round; opacity: .85; }
-.brand__mark-wave--soft { opacity: .55; }
-.brand__mark-stone { fill: #ede5d8; stroke: #241a22; stroke-width: 1.6; stroke-linejoin: round; }
-.brand__mark-eye { fill: none; stroke: #30202d; stroke-width: 1.5; stroke-linejoin: round; }
-.brand__mark-pupil { fill: #30202d; }
-.brand__mark-glint { fill: #ede5d8; }
-.brand__mark-lash { fill: none; stroke: #30202d; stroke-width: 1.5; stroke-linecap: round; }
-.brand__mark-spark { fill: var(--rose); }
-.brand__mark-bubble { fill: #ede5d8; opacity: .8; }
-.footer-brand__mark .brand__mark { width: 2.7rem; }
+.footer-brand__mark .brand__mark { width: 3.1rem; }
+
 .admin-login__overlay .brand { align-self: flex-start; justify-self: start; color: #f2e8db; }
 .admin-login__overlay .brand:hover { color: #f2e8db; }
 .mobile-nav .brand--small { font-size: 1.22rem; }
-.mobile-nav .brand--small .brand__mark { width: 2.45rem; }
+.mobile-nav .brand--small .brand__mark { width: 2.7rem; }
 
 .main-nav a {
   font-family: var(--ui-font);
@@ -1625,7 +1614,7 @@ body.has-fallback-product .modal-product__body h2 {
   body:where(:not(.admin-page):not(.admin-login-page)) { font-size: 18px; }
   .site-header__inner { gap: .4rem; min-height: 70px; }
   .brand { font-size: 1.25rem; gap: .4rem; }
-  .brand__mark { width: 2.5rem; }
+  .brand__mark { width: 3.1rem; }
   .brand__star { width: 15px; height: 15px; margin-right: .2rem; }
   .header-tools { gap: 0; margin-left: auto; }
   .header-tools > .icon-btn[data-search-trigger] { display: none; }
@@ -1672,7 +1661,7 @@ body.has-fallback-product .modal-product__body h2 {
   .header-tools > .dropdown,
   .header-tools > a.icon-btn { display: none; }
   .brand { font-size: 1.05rem; }
-  .brand__mark { width: 2.15rem; }
+  .brand__mark { width: 2.6rem; }
   .hero__kicker { font-size: .8rem; letter-spacing: .04em; padding: .3rem .85rem; }
 }
 

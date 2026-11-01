@@ -3,17 +3,14 @@ if (!defined('RB_ROOT')) {
     require_once __DIR__ . '/../config/app.php';
 }
 ?>
-<svg class="brand__mark" viewBox="0 0 80 78" aria-hidden="true" focusable="false">
-  <g transform="rotate(-3 40 38)">
-    <path class="brand__mark-dish" d="M40 6C56.8 6 69.8 18 72.8 34.2 75.6 49.6 65.8 66.2 49.2 70.4 33.2 74.4 14.6 64.2 8.8 47.4 3.4 31.6 14 10.8 30.4 7 33.4 6.3 36.6 6 40 6Z"/>
-    <path class="brand__mark-wave" d="M20 40c3.5-2.6 7-2.6 10.5 0s7 2.6 10.5 0 7-2.6 10.5 0 7 2.6 10.5 0"/>
-    <path class="brand__mark-wave brand__mark-wave--soft" d="M24 47c3-2.2 6-2.2 9 0s6 2.2 9 0 6-2.2 9 0"/>
-    <path class="brand__mark-spark" d="M55 24.6l1.4 3.7 3.7 1.4-3.7 1.4-1.4 3.7-1.4-3.7-3.7-1.4 3.7-1.4Z"/>
-    <circle class="brand__mark-bubble" cx="25" cy="26" r="1.6"/>
-    <path class="brand__mark-stone" d="M26 66c-2.6-3.4-3-7.4-.6-10.6l1.4-3.4 4.6 1 4-4.6 4.8 3.8 4.6-3 3.6 4.4c2 2.8 2 6.8-.2 9.8-2.4 3.4-7 5-12.4 5-5 0-9.2-1.2-11.8-4.4Z"/>
-    <path class="brand__mark-eye" d="M33.6 56.4c4-2.8 8.4-2.8 12.4 0l-.3 2.2c-3.8 1.8-7.9 1.8-11.7 0Z"/>
-    <ellipse class="brand__mark-pupil" cx="39.9" cy="57.4" rx="1.8" ry="2.1"/>
-    <circle class="brand__mark-glint" cx="39.2" cy="56.6" r=".55"/>
-    <path class="brand__mark-lash" d="M46.6 56l1.6-1.2"/>
-  </g>
-</svg>
+<img
+  class="brand__mark"
+  src="<?= e(asset('images/logo/rock-mark-480.webp')) ?>"
+  srcset="<?= e(asset('images/logo/rock-mark-240.webp')) ?> 240w, <?= e(asset('images/logo/rock-mark-480.webp')) ?> 480w"
+  sizes="3.8rem"
+  width="480"
+  height="290"
+  alt=""
+  aria-hidden="true"
+  decoding="async"
+>

@@ -19,8 +19,7 @@ $body_class = $body_class ?? '';
 <meta property="og:title" content="<?= e($page_title) ?>">
 <meta property="og:description" content="<?= e($page_description) ?>">
 <meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="<?= e(asset('logo-mark.svg')) ?>">
-<link rel="icon" type="image/png" href="<?= e(asset('images/logo/favicon.png')) ?>">
+<link rel="icon" type="image/png" sizes="192x192" href="<?= e(asset('images/logo/favicon.png')) ?>">
 <link rel="preload" href="<?= e(asset('fonts/patrick-hand.woff2')) ?>" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="<?= e(asset('fonts/bungee.woff2')) ?>" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="<?= e(asset('fonts/kalam-400.woff2')) ?>" as="font" type="font/woff2" crossorigin>
