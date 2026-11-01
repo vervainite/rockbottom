@@ -5,11 +5,18 @@ if (!defined('RB_ROOT')) {
 require_login();
 $accountActive = $accountActive ?? '';
 $accountUser = user();
+$accountAvatar = rb_avatar_url($accountUser);
 $accountBag = cart_count($pdo);
 ?>
 <aside class="account-side">
   <div class="account-side__user">
-    <span class="avatar"><?= e(rb_initials((string) $accountUser['name'])) ?></span>
+    <span class="avatar<?= $accountAvatar ? ' avatar--photo' : '' ?>">
+      <?php if ($accountAvatar): ?>
+        <img src="<?= e($accountAvatar) ?>" alt="" width="56" height="56">
+      <?php else: ?>
+        <?= e(rb_initials((string) $accountUser['name'])) ?>
+      <?php endif; ?>
+    </span>
     <div>
       <span>Your little corner</span>
       <strong><?= e($accountUser['name']) ?></strong>

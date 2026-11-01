@@ -2,6 +2,9 @@
 .shots/
 vibe_images/
 
+# Personal profile uploads (runtime data)
+assets/images/profiles/
+
 # Logs and OS/editor cruft
 *.log
 .DS_Store
