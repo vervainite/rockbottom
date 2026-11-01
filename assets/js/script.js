@@ -28,6 +28,80 @@
       window.addEventListener('scroll', updateHeader, { passive: true });
     }
 
+    /* ---- Nav location indicator ---------------------------------------- */
+    (function initNavSpy() {
+      var nav = document.querySelector('.main-nav');
+      if (!nav) return;
+      var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+      var sections = ['shop', 'about', 'contact'].map(function (id) {
+        return { id: id, el: document.getElementById(id) };
+      }).filter(function (section) { return section.el; });
+      if (!sections.length) return;
+
+      var lockedId = '';
+      var lockedUntil = 0;
+
+      var setActive = function (id) {
+        links.forEach(function (link) {
+          var target = (link.getAttribute('href') || '').split('#')[1] || 'home';
+          link.classList.toggle('is-active', target === id);
+        });
+      };
+
+      var update = function () {
+        if (lockedId && Date.now() < lockedUntil) {
+          setActive(lockedId);
+          return;
+        }
+        lockedId = '';
+        var offset = (header ? header.offsetHeight : 80) + 24;
+        var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        var current = 'home';
+        sections.forEach(function (section) {
+          var rect = section.el.getBoundingClientRect();
+          if (rect.top <= offset && rect.bottom > offset) current = section.id;
+        });
+        if (atBottom) current = sections[sections.length - 1].id;
+        setActive(current);
+      };
+
+      var closeDrawer = function () {
+        var drawer = document.getElementById('mobileNav');
+        if (!drawer || !drawer.classList.contains('show') || !window.bootstrap) return;
+        var instance = window.bootstrap.Offcanvas.getInstance(drawer);
+        if (instance) instance.hide();
+      };
+
+      var onNavClick = function (event) {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        var link = event.currentTarget;
+        var href = link.getAttribute('href') || '';
+        var hash = href.split('#')[1] || '';
+        var target = hash ? document.getElementById(hash) : null;
+        if (hash && !target) return;
+        event.preventDefault();
+        lockedId = hash || 'home';
+        lockedUntil = Date.now() + 1400;
+        setActive(lockedId);
+        if (history.pushState) history.pushState(null, '', href);
+        closeDrawer();
+        if (target) {
+          target.scrollIntoView({ block: 'start' });
+        } else {
+          window.scrollTo({ top: 0 });
+        }
+      };
+
+      var navLinks = links.concat(Array.prototype.slice.call(document.querySelectorAll('.mobile-nav__links a')));
+      navLinks.forEach(function (link) { link.addEventListener('click', onNavClick); });
+
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      window.addEventListener('hashchange', update);
+      window.addEventListener('popstate', update);
+    })();
+
     /* ---- Flash alerts -------------------------------------------------- */
     document.addEventListener('click', function (event) {
       var dismiss = event.target.closest('[data-dismiss-alert]');
