@@ -32,6 +32,10 @@ CREATE TABLE users (
   role ENUM('customer','admin') NOT NULL DEFAULT 'customer',
   phone VARCHAR(30) NULL,
   address VARCHAR(500) NULL,
+  avatar VARCHAR(255) NULL,
+  cover VARCHAR(255) NULL,
+  bio VARCHAR(200) NULL,
+  card_style VARCHAR(20) NOT NULL DEFAULT 'reef',
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE KEY uq_users_email (email)

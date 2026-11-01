@@ -9,6 +9,13 @@ define('RB_MAX_QTY', 10);
 define('RB_SHIPPING_FEE', 80.00);
 define('RB_FREE_SHIPPING_AT', 1500.00);
 define('RB_ORDER_STATUSES', ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled']);
+define('RB_CARD_STYLES', [
+    'reef'   => ['label' => 'Deep Reef',   'note' => 'Ink water, kelp and coral.'],
+    'dune'   => ['label' => 'Warm Dune',   'note' => 'Sun-bleached paper and rose ink.'],
+    'moon'   => ['label' => 'Moon Tide',   'note' => 'Plum night and salt stars.'],
+    'scrap'  => ['label' => 'Paper Scrap', 'note' => 'Taped notes and ruler lines.'],
+    'bubble' => ['label' => 'Bubblegum',   'note' => 'Lilac fizz and soft bubbles.'],
+]);
 
 $debug = getenv('RB_DEBUG') === '1';
 error_reporting(E_ALL);
@@ -283,10 +290,11 @@ function rb_login_user(PDO $pdo, array $row): void
 {
     session_regenerate_id(true);
     $_SESSION['user'] = [
-        'id'    => (int) $row['id'],
-        'name'  => (string) $row['name'],
-        'email' => (string) $row['email'],
-        'role'  => (string) $row['role'],
+        'id'     => (int) $row['id'],
+        'name'   => (string) $row['name'],
+        'email'  => (string) $row['email'],
+        'role'   => (string) $row['role'],
+        'avatar' => $row['avatar'] ?? null,
     ];
     rb_merge_guest_cart($pdo, (int) $row['id']);
     unset($_SESSION['csrf']);
@@ -658,6 +666,137 @@ function rb_delete_uploaded_image(string $filename): void
         return; // Keep the original supplied brand assets.
     }
     $path = RB_ROOT . '/assets/images/products/' . $filename;
+    if (is_file($path)) {
+        @unlink($path);
+    }
+}
+
+/* -------------------------------------------------------------------------
+ * Member profile card
+ * ---------------------------------------------------------------------- */
+
+function rb_card_style(?string $style): string
+{
+    return isset(RB_CARD_STYLES[$style ?? '']) ? (string) $style : 'reef';
+}
+
+function rb_profile_image_url(?string $file): ?string
+{
+    if (!is_string($file) || !preg_match('/^u\d+-(?:avatar|cover)-[a-f0-9]{8}\.webp$/', $file)) {
+        return null;
+    }
+    if (!is_file(RB_ROOT . '/assets/images/profiles/' . $file)) {
+        return null;
+    }
+    return asset('images/profiles/' . rawurlencode($file));
+}
+
+function rb_avatar_url(?array $account): ?string
+{
+    return rb_profile_image_url($account['avatar'] ?? null);
+}
+
+/**
+ * Validate, re-encode and store an avatar or card cover.
+ * Throws RuntimeException with a safe, user-facing message on failure.
+ */
+function rb_handle_profile_upload(array $file, int $userId, string $kind): string
+{
+    if (!in_array($kind, ['avatar', 'cover'], true)) {
+        throw new InvalidArgumentException('Unknown profile image type.');
+    }
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        throw new RuntimeException('Choose an image to upload (3 MB maximum).');
+    }
+    $tmp = $file['tmp_name'] ?? '';
+    if (!is_string($tmp) || $tmp === '' || !is_uploaded_file($tmp)) {
+        throw new RuntimeException('The upload could not be read. Please try again.');
+    }
+
+    $size = filesize($tmp);
+    if ($size === false || $size < 1) {
+        throw new RuntimeException('The uploaded file is empty.');
+    }
+    if ($size > 3 * 1024 * 1024) {
+        throw new RuntimeException('That image is larger than 3 MB.');
+    }
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($tmp);
+    $allowed = [
+        'image/jpeg' => IMAGETYPE_JPEG,
+        'image/png'  => IMAGETYPE_PNG,
+        'image/webp' => IMAGETYPE_WEBP,
+    ];
+    if (!is_string($mime) || !isset($allowed[$mime])) {
+        throw new RuntimeException('Only JPG, PNG or WebP images are allowed.');
+    }
+
+    $info = @getimagesize($tmp);
+    if ($info === false || !isset($info[0], $info[1], $info[2])) {
+        throw new RuntimeException('That file is not a readable image.');
+    }
+    if ($info[2] !== $allowed[$mime]) {
+        throw new RuntimeException('The image type does not match its contents.');
+    }
+    [$width, $height] = $info;
+    if ($width < 200 || $height < 200) {
+        throw new RuntimeException('Use an image at least 200 × 200 pixels.');
+    }
+    if ($width > 5000 || $height > 5000) {
+        throw new RuntimeException('That image is too large. Keep it under 5000 pixels.');
+    }
+
+    if (!function_exists('imagewebp') || !function_exists('imagecreatefromstring')) {
+        throw new RuntimeException('The PHP GD extension with WebP support is required for uploads.');
+    }
+
+    $raw = file_get_contents($tmp);
+    $source = $raw !== false ? @imagecreatefromstring($raw) : false;
+    if (!$source) {
+        throw new RuntimeException('The image could not be processed.');
+    }
+
+    $max = $kind === 'avatar' ? 900 : 1800;
+    $scale = min(1, $max / max($width, $height));
+    $newW = max(1, (int) round($width * $scale));
+    $newH = max(1, (int) round($height * $scale));
+    $canvas = imagecreatetruecolor($newW, $newH);
+    imagealphablending($canvas, false);
+    imagesavealpha($canvas, true);
+    imagefill($canvas, 0, 0, imagecolorallocatealpha($canvas, 0, 0, 0, 127));
+    imagealphablending($canvas, true);
+    imagecopyresampled($canvas, $source, 0, 0, 0, 0, $newW, $newH, $width, $height);
+    imagedestroy($source);
+
+    $dir = RB_ROOT . '/assets/images/profiles';
+    if (!is_dir($dir) && !@mkdir($dir, 0755, true) && !is_dir($dir)) {
+        imagedestroy($canvas);
+        throw new RuntimeException('The profile image folder could not be created.');
+    }
+    if (!is_writable($dir)) {
+        imagedestroy($canvas);
+        throw new RuntimeException('The profile image folder is not writable. Check folder permissions.');
+    }
+
+    $filename = 'u' . $userId . '-' . $kind . '-' . bin2hex(random_bytes(4)) . '.webp';
+    $destination = $dir . '/' . $filename;
+    $saved = imagewebp($canvas, $destination, 86);
+    imagedestroy($canvas);
+    if (!$saved) {
+        throw new RuntimeException('The image could not be saved.');
+    }
+    @chmod($destination, 0644);
+
+    return $filename;
+}
+
+function rb_delete_profile_image(?string $file): void
+{
+    if (!is_string($file) || !preg_match('/^u(\d+)-(?:avatar|cover)-[a-f0-9]{8}\.webp$/', $file)) {
+        return;
+    }
+    $path = RB_ROOT . '/assets/images/profiles/' . $file;
     if (is_file($path)) {
         @unlink($path);
     }
