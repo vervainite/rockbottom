@@ -198,7 +198,7 @@ show_flash();
         <div class="about__facts">
           <div><span>01</span><p><strong>Small batch</strong>Selected in tiny runs, never mass-produced.</p></div>
           <div><span>02</span><p><strong>Hand-finished</strong>Little differences are part of the charm.</p></div>
-          <div><span>03</span><p><strong>Sent with care</strong>Packed by hand, shipped from Manila.</p></div>
+          <div><span>03</span><p><strong>Sent with care</strong>Packed by hand, shipped from Cebu.</p></div>
         </div>
         <a class="text-link" href="#shop">Explore the collection <span aria-hidden="true">↗</span></a>
       </div>
@@ -338,7 +338,7 @@ show_flash();
         <dl class="contact__details">
           <div><dt>Email</dt><dd><a href="mailto:hello@rockbottom.ph">hello@rockbottom.ph</a></dd></div>
           <div><dt>Hours</dt><dd>Monday–Saturday, 10am–7pm</dd></div>
-          <div><dt>Studio</dt><dd>Manila, Philippines</dd></div>
+          <div><dt>Studio</dt><dd>Cebu, Philippines</dd></div>
         </dl>
       </div>
       <form class="contact-form" method="post" action="<?= e(url('index.php#contact')) ?>" novalidate>
@@ -400,7 +400,7 @@ show_flash();
             </div>
           </form>
           <ul class="modal-product__notes">
-            <li>Packed by hand in Manila</li>
+            <li>Packed by hand in Cebu</li>
             <li>Cash on Delivery available</li>
             <li>Free local delivery over <?= money(RB_FREE_SHIPPING_AT) ?></li>
           </ul>

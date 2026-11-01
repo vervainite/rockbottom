@@ -13,7 +13,7 @@ if (!defined('RB_ROOT')) {
           <span class="brand__dot" aria-hidden="true">.</span>
         </a>
         <p>A small world of collectible characters, dug up from somewhere soft and strange.</p>
-        <span class="footer-est">EST. 2026 · MANILA, PH</span>
+        <span class="footer-est">EST. 2026 · CEBU, PH</span>
       </div>
       <div class="footer-col">
         <h2>Explore</h2>

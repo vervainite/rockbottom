@@ -10,7 +10,7 @@ $bagCount = cart_count($pdo);
   <div class="rb-container announcement__inner">
     <span>Free local delivery over <?= money(RB_FREE_SHIPPING_AT) ?></span>
     <span class="announcement__mid">Cash on Delivery available</span>
-    <span>Est. 2026 · Manila, PH</span>
+    <span>Est. 2026 · Cebu, PH</span>
   </div>
 </div>
 <header class="site-header" id="siteHeader">

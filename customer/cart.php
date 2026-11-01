@@ -149,7 +149,7 @@ show_flash();
           <?php endif; ?>
           <ul class="summary-perks">
             <li>Cash on Delivery</li>
-            <li>Packed by hand in Manila</li>
+            <li>Packed by hand in Cebu</li>
             <li>Secure checkout</li>
           </ul>
         </aside>

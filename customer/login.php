@@ -68,7 +68,7 @@ show_flash();
       <div class="auth-art__overlay">
         <p class="eyebrow eyebrow--light">Welcome back</p>
         <p class="auth-quote">“The best things<br>are found <em>below.</em>”</p>
-        <span>Est. 2026 · Manila</span>
+        <span>Est. 2026 · Cebu</span>
       </div>
     </div>
     <div class="auth-panel">
