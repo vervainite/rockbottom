@@ -346,6 +346,219 @@
       });
     }
 
+    /* ---- Collector card ------------------------------------------------ */
+    (function initCollectorCard() {
+      var card = document.querySelector('[data-collector-card]');
+      if (!card) return;
+
+      var flip = document.querySelector('[data-card-flip]');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var finePoint = window.matchMedia('(hover: hover) and (pointer: fine)');
+      var tiltFrame = 0;
+
+      function setFlipped(on) {
+        card.classList.toggle('is-flipped', on);
+        card.style.removeProperty('--tilt-x');
+        card.style.removeProperty('--tilt-y');
+        if (flip) {
+          flip.setAttribute('aria-pressed', on ? 'true' : 'false');
+          flip.textContent = on ? 'Flip back' : 'Flip card';
+        }
+      }
+
+      function toggle() {
+        setFlipped(!card.classList.contains('is-flipped'));
+      }
+
+      if (flip) flip.addEventListener('click', toggle);
+      card.addEventListener('click', function (event) {
+        if (event.target.closest('a, button')) return;
+        toggle();
+      });
+
+      var resetTilt = function () {
+        window.cancelAnimationFrame(tiltFrame);
+        card.style.removeProperty('--tilt-x');
+        card.style.removeProperty('--tilt-y');
+      };
+
+      card.addEventListener('pointermove', function (event) {
+        if (reduce.matches || !finePoint.matches || card.classList.contains('is-flipped')) return;
+        var rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        var px = (event.clientX - rect.left) / rect.width;
+        var py = (event.clientY - rect.top) / rect.height;
+        window.cancelAnimationFrame(tiltFrame);
+        tiltFrame = window.requestAnimationFrame(function () {
+          card.style.setProperty('--tilt-y', ((px - 0.5) * 12).toFixed(2) + 'deg');
+          card.style.setProperty('--tilt-x', ((0.5 - py) * 10).toFixed(2) + 'deg');
+          card.style.setProperty('--shine-x', (px * 100).toFixed(1) + '%');
+          card.style.setProperty('--shine-y', (py * 100).toFixed(1) + '%');
+        });
+      });
+      card.addEventListener('pointerleave', resetTilt);
+      card.addEventListener('blur', resetTilt);
+
+      var skins = ['reef', 'dune', 'moon', 'scrap', 'bubble'];
+      var styleInputs = Array.prototype.slice.call(document.querySelectorAll('[data-card-style]'));
+      var styleName = document.querySelector('[data-card-style-name]');
+      var styleLabel = document.querySelector('[data-card-style-label]');
+
+      function applyStyle(input) {
+        styleInputs.forEach(function (radio) {
+          var swatch = radio.closest('.card-swatch');
+          if (swatch) swatch.classList.toggle('is-selected', radio.checked);
+        });
+        skins.forEach(function (skin) {
+          card.classList.toggle('is-' + skin, input.value === skin);
+        });
+        var swatch = input.closest('.card-swatch');
+        var labelNode = swatch ? swatch.querySelector('strong') : null;
+        var label = labelNode ? labelNode.textContent : input.value;
+        if (styleName) styleName.textContent = label;
+        if (styleLabel) styleLabel.textContent = label;
+      }
+
+      styleInputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+          if (input.checked) applyStyle(input);
+        });
+      });
+      var checkedSkin = document.querySelector('[data-card-style]:checked');
+      if (checkedSkin) applyStyle(checkedSkin);
+
+      var nameInput = document.querySelector('[data-card-name-input]');
+      var nameNode = document.querySelector('[data-card-name]');
+      var bioInput = document.querySelector('[data-card-bio-input]');
+      var bioNode = document.querySelector('[data-card-bio]');
+      var bioCount = document.querySelector('[data-bio-count]');
+      var initialsNode = document.querySelector('[data-card-initials]');
+      var houseBio = 'Collecting small strange things from the bottom of the pond.';
+
+      function initialsOf(value) {
+        var parts = String(value || '').trim().split(/\s+/).filter(Boolean);
+        if (!parts.length) return '?';
+        var first = parts[0].charAt(0);
+        var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : '';
+        return (first + last).toUpperCase();
+      }
+
+      if (nameInput) {
+        nameInput.addEventListener('input', function () {
+          var value = nameInput.value.trim();
+          if (nameNode) nameNode.textContent = value || 'Your name';
+          if (initialsNode && !initialsNode.hidden) initialsNode.textContent = initialsOf(value);
+        });
+      }
+
+      if (bioInput) {
+        bioInput.addEventListener('input', function () {
+          var value = bioInput.value.trim();
+          if (bioNode) bioNode.textContent = value || houseBio;
+          if (bioCount) bioCount.textContent = String(bioInput.value.length);
+        });
+      }
+
+      var avatarImage = document.querySelector('[data-card-avatar]');
+      var avatarThumbImage = document.querySelector('[data-avatar-thumb-img]');
+      var avatarThumbInitials = document.querySelector('[data-avatar-thumb-initials]');
+      var avatarInput = document.querySelector('[data-avatar-input]');
+      var avatarRemove = document.querySelector('[data-avatar-remove]');
+      var originalAvatar = avatarImage && avatarImage.getAttribute('src') ? avatarImage.getAttribute('src') : '';
+
+      function readPreview(file, done) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          if (typeof reader.result === 'string') done(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function showAvatar(src) {
+        var has = !!src;
+        if (avatarImage) {
+          if (has) {
+            avatarImage.src = src;
+            avatarImage.hidden = false;
+          } else {
+            avatarImage.hidden = true;
+            avatarImage.removeAttribute('src');
+          }
+        }
+        if (initialsNode) initialsNode.hidden = has;
+        if (avatarThumbImage) {
+          if (has) {
+            avatarThumbImage.src = src;
+            avatarThumbImage.hidden = false;
+          } else {
+            avatarThumbImage.hidden = true;
+            avatarThumbImage.removeAttribute('src');
+          }
+        }
+        if (avatarThumbInitials) avatarThumbInitials.hidden = has;
+      }
+
+      if (avatarInput) {
+        avatarInput.addEventListener('change', function () {
+          var file = avatarInput.files && avatarInput.files[0];
+          if (!file) {
+            showAvatar(avatarRemove && avatarRemove.checked ? '' : originalAvatar);
+            return;
+          }
+          readPreview(file, showAvatar);
+          if (avatarRemove) avatarRemove.checked = false;
+        });
+      }
+      if (avatarRemove) {
+        avatarRemove.addEventListener('change', function () {
+          if (avatarRemove.checked) {
+            if (avatarInput) avatarInput.value = '';
+            showAvatar('');
+          } else if (avatarInput && !avatarInput.files.length) {
+            showAvatar(originalAvatar);
+          }
+        });
+      }
+
+      var cover = document.querySelector('[data-card-cover]');
+      var coverThumb = document.querySelector('[data-cover-thumb]');
+      var coverInput = document.querySelector('[data-cover-input]');
+      var coverRemove = document.querySelector('[data-cover-remove]');
+      var originalCover = '';
+      if (cover) {
+        var currentCover = cover.style.backgroundImage || '';
+        var coverMatch = currentCover.match(/^url\(["']?(.*?)["']?\)$/);
+        if (coverMatch) originalCover = coverMatch[1];
+      }
+      function showCover(url) {
+        var value = url ? 'url("' + url.replace(/"/g, '%22') + '")' : '';
+        if (cover) cover.style.backgroundImage = value;
+        if (coverThumb) coverThumb.style.backgroundImage = value;
+      }
+
+      if (coverInput) {
+        coverInput.addEventListener('change', function () {
+          var file = coverInput.files && coverInput.files[0];
+          if (!file) {
+            showCover(coverRemove && coverRemove.checked ? '' : originalCover);
+            return;
+          }
+          readPreview(file, showCover);
+          if (coverRemove) coverRemove.checked = false;
+        });
+      }
+      if (coverRemove) {
+        coverRemove.addEventListener('change', function () {
+          if (coverRemove.checked) {
+            if (coverInput) coverInput.value = '';
+            showCover('');
+          } else if (coverInput && !coverInput.files.length) {
+            showCover(originalCover);
+          }
+        });
+      }
+    })();
+
     /* ---- Payment option highlight ------------------------------------- */
     document.querySelectorAll('.payment-option input[type="radio"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
