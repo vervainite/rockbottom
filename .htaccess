@@ -1,0 +1,17 @@
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Setup notes, database dumps and logs are never served.
+<FilesMatch "(^\.|\.(md|sql|log|ini|env|bak|sh|lock)$)">
+  Require all denied
+</FilesMatch>
+
+# Block direct access to PHP partials that are meant to be included.
+<FilesMatch "^(config|database)$">
+  Require all denied
+</FilesMatch>
