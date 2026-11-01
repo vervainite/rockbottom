@@ -399,8 +399,8 @@
       card.addEventListener('pointerleave', resetTilt);
       card.addEventListener('blur', resetTilt);
 
-      var skins = ['reef', 'dune', 'moon', 'scrap', 'bubble'];
       var styleInputs = Array.prototype.slice.call(document.querySelectorAll('[data-card-style]'));
+      var skins = styleInputs.map(function (input) { return input.value; });
       var styleName = document.querySelector('[data-card-style-name]');
       var styleLabel = document.querySelector('[data-card-style-label]');
 
@@ -474,6 +474,34 @@
         reader.readAsDataURL(file);
       }
 
+      function formatBytes(bytes) {
+        if (bytes >= 1048576) return (Math.round(bytes / 104857.6) / 10) + ' MB';
+        return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+      }
+
+      function acceptsSize(input) {
+        var node = input.closest('.upload-field__body');
+        var error = node ? node.querySelector('[data-upload-error]') : null;
+        var max = parseInt(input.getAttribute('data-max-bytes'), 10) || 0;
+        var file = input.files && input.files[0];
+        if (!error || !file || !max) {
+          if (error) {
+            error.hidden = true;
+            error.textContent = '';
+          }
+          return true;
+        }
+        if (file.size > max) {
+          error.textContent = 'That image is ' + formatBytes(file.size) + '. The limit is ' + formatBytes(max) + ', so pick a smaller file.';
+          error.hidden = false;
+          input.value = '';
+          return false;
+        }
+        error.hidden = true;
+        error.textContent = '';
+        return true;
+      }
+
       function showAvatar(src) {
         var has = !!src;
         if (avatarImage) {
@@ -502,6 +530,10 @@
         avatarInput.addEventListener('change', function () {
           var file = avatarInput.files && avatarInput.files[0];
           if (!file) {
+            showAvatar(avatarRemove && avatarRemove.checked ? '' : originalAvatar);
+            return;
+          }
+          if (!acceptsSize(avatarInput)) {
             showAvatar(avatarRemove && avatarRemove.checked ? '' : originalAvatar);
             return;
           }
@@ -540,6 +572,10 @@
         coverInput.addEventListener('change', function () {
           var file = coverInput.files && coverInput.files[0];
           if (!file) {
+            showCover(coverRemove && coverRemove.checked ? '' : originalCover);
+            return;
+          }
+          if (!acceptsSize(coverInput)) {
             showCover(coverRemove && coverRemove.checked ? '' : originalCover);
             return;
           }

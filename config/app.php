@@ -10,12 +10,39 @@ define('RB_SHIPPING_FEE', 80.00);
 define('RB_FREE_SHIPPING_AT', 1500.00);
 define('RB_ORDER_STATUSES', ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled']);
 define('RB_CARD_STYLES', [
-    'reef'   => ['label' => 'Deep Reef',   'note' => 'Ink water, kelp and coral.'],
-    'dune'   => ['label' => 'Warm Dune',   'note' => 'Sun-bleached paper and rose ink.'],
-    'moon'   => ['label' => 'Moon Tide',   'note' => 'Plum night and salt stars.'],
-    'scrap'  => ['label' => 'Paper Scrap', 'note' => 'Taped notes and ruler lines.'],
-    'bubble' => ['label' => 'Bubblegum',   'note' => 'Lilac fizz and soft bubbles.'],
+    'reef'   => ['label' => 'Deep Reef',     'note' => 'Ink water, kelp and coral.',        'group' => 'house'],
+    'dune'   => ['label' => 'Warm Dune',     'note' => 'Sun-bleached paper and rose ink.',  'group' => 'house'],
+    'moon'   => ['label' => 'Moon Tide',     'note' => 'Plum night and salt stars.',        'group' => 'house'],
+    'scrap'  => ['label' => 'Paper Scrap',   'note' => 'Taped notes and ruler lines.',      'group' => 'house'],
+    'bubble' => ['label' => 'Bubblegum',     'note' => 'Lilac fizz and soft bubbles.',      'group' => 'house'],
+
+    'void'   => ['label' => 'Void Ink',      'note' => 'Black water and ember scratches.',  'group' => 'dark'],
+    'ash'    => ['label' => 'Ash Charcoal',  'note' => 'Smoke, bone and amber grit.',       'group' => 'dark'],
+    'raven'  => ['label' => 'Raven Wing',    'note' => 'Cold blue-black with silver dust.', 'group' => 'dark'],
+    'rust'   => ['label' => 'Rust & Bone',   'note' => 'Oxblood leather and rust.',         'group' => 'dark'],
+    'crypt'  => ['label' => 'Crypt Moss',    'note' => 'Wet stone and toxic green.',        'group' => 'dark'],
+
+    'linen'  => ['label' => 'Sea Linen',     'note' => 'Washed cloth and quiet teal.',      'group' => 'soft'],
+    'sage'   => ['label' => 'Sage Wash',     'note' => 'Faded herb and soft moss.',         'group' => 'soft'],
+    'clay'   => ['label' => 'Soft Clay',     'note' => 'Warm putty and dusty rose.',        'group' => 'soft'],
+    'fog'    => ['label' => 'Morning Fog',   'note' => 'Cool grey with pale blue ink.',     'group' => 'soft'],
+    'honey'  => ['label' => 'Honey Milk',    'note' => 'Cream paper and warm honey.',       'group' => 'soft'],
+
+    'blush'  => ['label' => 'Blush Paper',   'note' => 'Powder pink and pencil lines.',     'group' => 'pink'],
+    'rose'   => ['label' => 'Rose Ink',      'note' => 'Deep rose and wine lettering.',     'group' => 'pink'],
+    'petal'  => ['label' => 'Petal Press',   'note' => 'Pressed petals and lilac fizz.',    'group' => 'pink'],
+    'cherry' => ['label' => 'Cherry Fizz',   'note' => 'Soda pink and cherry dots.',        'group' => 'pink'],
+    'mauve'  => ['label' => 'Mauve Hour',    'note' => 'Dusk mauve and soft plum.',         'group' => 'pink'],
 ]);
+
+define('RB_CARD_STYLE_GROUPS', [
+    'house' => 'The house five',
+    'dark'  => 'Darker & edgier',
+    'soft'  => 'Soft focus',
+    'pink'  => 'Pink shades',
+]);
+
+define('RB_PROFILE_UPLOAD_MAX', 5 * 1024 * 1024);
 
 $debug = getenv('RB_DEBUG') === '1';
 error_reporting(E_ALL);
@@ -696,6 +723,57 @@ function rb_avatar_url(?array $account): ?string
     return rb_profile_image_url($account['avatar'] ?? null);
 }
 
+function rb_bytes_from_ini(string $value): int
+{
+    $value = trim($value);
+    if ($value === '') {
+        return 0;
+    }
+    $bytes = (int) $value;
+    $unit = strtolower(substr($value, -1));
+    if ($unit === 'g') {
+        $bytes *= 1024;
+    }
+    if ($unit === 'g' || $unit === 'm') {
+        $bytes *= 1024;
+    }
+    if ($unit === 'g' || $unit === 'm' || $unit === 'k') {
+        $bytes *= 1024;
+    }
+    return max(0, $bytes);
+}
+
+/**
+ * Largest image the server can accept right now, in bytes.
+ *
+ * The UI and the validator share this so we never advertise a limit the
+ * PHP configuration will reject.
+ */
+function rb_profile_upload_limit(): int
+{
+    $limits = [RB_PROFILE_UPLOAD_MAX];
+
+    $ini = rb_bytes_from_ini((string) ini_get('upload_max_filesize'));
+    if ($ini > 0) {
+        $limits[] = $ini;
+    }
+    $post = rb_bytes_from_ini((string) ini_get('post_max_size'));
+    if ($post > 0) {
+        $limits[] = max(1024 * 1024, $post - 512 * 1024);
+    }
+
+    return min($limits);
+}
+
+function rb_format_bytes(int $bytes): string
+{
+    if ($bytes >= 1024 * 1024) {
+        $mb = $bytes / (1024 * 1024);
+        return ($mb == floor($mb) ? (string) (int) $mb : number_format($mb, 1)) . ' MB';
+    }
+    return max(1, (int) round($bytes / 1024)) . ' KB';
+}
+
 /**
  * Validate, re-encode and store an avatar or card cover.
  * Throws RuntimeException with a safe, user-facing message on failure.
@@ -705,9 +783,19 @@ function rb_handle_profile_upload(array $file, int $userId, string $kind): strin
     if (!in_array($kind, ['avatar', 'cover'], true)) {
         throw new InvalidArgumentException('Unknown profile image type.');
     }
-    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
-        throw new RuntimeException('Choose an image to upload (3 MB maximum).');
+
+    $limit = rb_profile_upload_limit();
+    $error = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
+    if ($error !== UPLOAD_ERR_OK) {
+        throw new RuntimeException(match ($error) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'That image is larger than ' . rb_format_bytes($limit) . '. Pick a smaller file.',
+            UPLOAD_ERR_PARTIAL    => 'The upload was interrupted. Please try again.',
+            UPLOAD_ERR_NO_FILE    => 'Choose an image to upload.',
+            UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE => 'The server could not store that file. Please try again.',
+            default               => 'The upload failed. Please try again.',
+        });
     }
+
     $tmp = $file['tmp_name'] ?? '';
     if (!is_string($tmp) || $tmp === '' || !is_uploaded_file($tmp)) {
         throw new RuntimeException('The upload could not be read. Please try again.');
@@ -717,8 +805,8 @@ function rb_handle_profile_upload(array $file, int $userId, string $kind): strin
     if ($size === false || $size < 1) {
         throw new RuntimeException('The uploaded file is empty.');
     }
-    if ($size > 3 * 1024 * 1024) {
-        throw new RuntimeException('That image is larger than 3 MB.');
+    if ($size > $limit) {
+        throw new RuntimeException('That image is larger than ' . rb_format_bytes($limit) . '. Pick a smaller file.');
     }
 
     $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -755,6 +843,25 @@ function rb_handle_profile_upload(array $file, int $userId, string $kind): strin
     $source = $raw !== false ? @imagecreatefromstring($raw) : false;
     if (!$source) {
         throw new RuntimeException('The image could not be processed.');
+    }
+
+    if ($mime === 'image/jpeg' && function_exists('exif_read_data')) {
+        $exif = @exif_read_data($tmp);
+        $angle = match ((int) ($exif['Orientation'] ?? 1)) {
+            3 => 180,
+            6 => -90,
+            8 => 90,
+            default => 0,
+        };
+        if ($angle !== 0) {
+            $rotated = @imagerotate($source, $angle, 0);
+            if ($rotated !== false) {
+                imagedestroy($source);
+                $source = $rotated;
+                $width = imagesx($source);
+                $height = imagesy($source);
+            }
+        }
     }
 
     $max = $kind === 'avatar' ? 900 : 1800;

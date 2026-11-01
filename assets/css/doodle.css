@@ -1984,6 +1984,218 @@ body.has-fallback-product .modal-product__body h2 {
     radial-gradient(circle at 88% 88%, rgba(176, 81, 124, .2), transparent 30%);
 }
 
+/* Darker & edgier ------------------------------------------------------- */
+.collector-card.is-void {
+  --card-bg: #121017;
+  --card-ink: #f3ead9;
+  --card-accent: #ff6b4a;
+  --card-muted: rgba(243, 234, 217, .62);
+  --card-line: rgba(243, 234, 217, .2);
+  --card-soft: rgba(243, 234, 217, .07);
+  --card-deco: rgba(255, 107, 74, .3);
+  --card-bg-image:
+    radial-gradient(circle at 82% 10%, rgba(255, 107, 74, .24), transparent 44%),
+    radial-gradient(circle at 14% 88%, rgba(120, 80, 200, .22), transparent 46%),
+    repeating-linear-gradient(112deg, transparent 0 13px, rgba(243, 234, 217, .05) 13px 14px),
+    repeating-linear-gradient(22deg, transparent 0 27px, rgba(243, 234, 217, .035) 27px 28px);
+}
+.collector-card.is-ash {
+  --card-bg: #26231f;
+  --card-ink: #efe6d6;
+  --card-accent: #d9a05b;
+  --card-muted: rgba(239, 230, 214, .62);
+  --card-line: rgba(239, 230, 214, .2);
+  --card-soft: rgba(239, 230, 214, .07);
+  --card-deco: rgba(217, 160, 91, .28);
+  --card-bg-image:
+    radial-gradient(circle at 18% 14%, rgba(239, 230, 214, .09), transparent 42%),
+    radial-gradient(circle at 82% 86%, rgba(217, 160, 91, .16), transparent 46%),
+    repeating-radial-gradient(circle at 32% 28%, transparent 0 3px, rgba(239, 230, 214, .05) 3px 4px);
+}
+.collector-card.is-raven {
+  --card-bg: #141a26;
+  --card-ink: #e8ecf5;
+  --card-accent: #9fc4ff;
+  --card-muted: rgba(232, 236, 245, .6);
+  --card-line: rgba(232, 236, 245, .2);
+  --card-soft: rgba(232, 236, 245, .07);
+  --card-deco: rgba(159, 196, 255, .3);
+  --card-bg-image:
+    radial-gradient(1.5px 1.5px at 18% 22%, rgba(255, 255, 255, .7), transparent 60%),
+    radial-gradient(1px 1px at 62% 12%, rgba(255, 255, 255, .5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 84% 46%, rgba(159, 196, 255, .55), transparent 60%),
+    radial-gradient(1px 1px at 34% 74%, rgba(255, 255, 255, .4), transparent 60%),
+    radial-gradient(circle at 80% 8%, rgba(159, 196, 255, .2), transparent 44%),
+    repeating-linear-gradient(100deg, transparent 0 22px, rgba(232, 236, 245, .04) 22px 23px);
+}
+.collector-card.is-rust {
+  --card-bg: #2a1612;
+  --card-ink: #f1e3d0;
+  --card-accent: #d9814f;
+  --card-muted: rgba(241, 227, 208, .62);
+  --card-line: rgba(241, 227, 208, .2);
+  --card-soft: rgba(241, 227, 208, .07);
+  --card-deco: rgba(217, 129, 79, .3);
+  --card-bg-image:
+    radial-gradient(circle at 78% 12%, rgba(217, 129, 79, .22), transparent 42%),
+    radial-gradient(circle at 16% 80%, rgba(120, 54, 32, .4), transparent 46%),
+    repeating-radial-gradient(circle at 70% 60%, transparent 0 5px, rgba(241, 227, 208, .04) 5px 6px);
+}
+.collector-card.is-crypt {
+  --card-bg: #14201a;
+  --card-ink: #e9efdd;
+  --card-accent: #a8e063;
+  --card-muted: rgba(233, 239, 221, .6);
+  --card-line: rgba(233, 239, 221, .2);
+  --card-soft: rgba(233, 239, 221, .07);
+  --card-deco: rgba(168, 224, 99, .28);
+  --card-bg-image:
+    radial-gradient(circle at 22% 18%, rgba(168, 224, 99, .18), transparent 38%),
+    radial-gradient(circle at 84% 74%, rgba(60, 120, 80, .4), transparent 48%),
+    radial-gradient(circle at 52% 116%, rgba(20, 90, 60, .5), transparent 52%),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(233, 239, 221, .04) 24px 25px);
+}
+
+/* Soft focus ------------------------------------------------------------ */
+.collector-card.is-linen {
+  --card-bg: #ece5d6;
+  --card-ink: #3a4a45;
+  --card-accent: #7d9b8e;
+  --card-muted: rgba(58, 74, 69, .66);
+  --card-line: rgba(58, 74, 69, .26);
+  --card-soft: rgba(58, 74, 69, .05);
+  --card-deco: rgba(58, 74, 69, .16);
+  --card-bg-image:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(58, 74, 69, .045) 3px 4px),
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(58, 74, 69, .045) 3px 4px),
+    radial-gradient(circle at 84% 12%, rgba(125, 155, 142, .2), transparent 44%);
+}
+.collector-card.is-sage {
+  --card-bg: #e3e8d9;
+  --card-ink: #3d4a39;
+  --card-accent: #7c9469;
+  --card-muted: rgba(61, 74, 57, .66);
+  --card-line: rgba(61, 74, 57, .24);
+  --card-soft: rgba(61, 74, 57, .05);
+  --card-deco: rgba(124, 148, 105, .22);
+  --card-bg-image:
+    radial-gradient(ellipse at 24% 20%, rgba(255, 255, 255, .5), transparent 34%),
+    radial-gradient(ellipse at 78% 70%, rgba(124, 148, 105, .18), transparent 40%),
+    repeating-radial-gradient(circle at 60% 30%, transparent 0 9px, rgba(61, 74, 57, .05) 9px 10px);
+}
+.collector-card.is-clay {
+  --card-bg: #efdfd0;
+  --card-ink: #573a2f;
+  --card-accent: #b57d5f;
+  --card-muted: rgba(87, 58, 47, .66);
+  --card-line: rgba(87, 58, 47, .24);
+  --card-soft: rgba(87, 58, 47, .05);
+  --card-deco: rgba(181, 125, 95, .22);
+  --card-bg-image:
+    radial-gradient(circle at 78% 18%, rgba(181, 125, 95, .18), transparent 42%),
+    radial-gradient(circle at 12% 86%, rgba(255, 255, 255, .45), transparent 40%),
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 22px, rgba(87, 58, 47, .045) 22px 23px);
+}
+.collector-card.is-fog {
+  --card-bg: #e6eaee;
+  --card-ink: #374049;
+  --card-accent: #7f95a9;
+  --card-muted: rgba(55, 64, 73, .66);
+  --card-line: rgba(55, 64, 73, .22);
+  --card-soft: rgba(55, 64, 73, .05);
+  --card-deco: rgba(127, 149, 169, .24);
+  --card-bg-image:
+    radial-gradient(ellipse at 70% 8%, rgba(255, 255, 255, .7), transparent 46%),
+    repeating-linear-gradient(180deg, transparent 0 38px, rgba(55, 64, 73, .05) 38px 40px),
+    linear-gradient(160deg, rgba(255, 255, 255, .35), transparent 60%);
+}
+.collector-card.is-honey {
+  --card-bg: #f4e9cf;
+  --card-ink: #57452c;
+  --card-accent: #c2964f;
+  --card-muted: rgba(87, 69, 44, .66);
+  --card-line: rgba(87, 69, 44, .24);
+  --card-soft: rgba(87, 69, 44, .05);
+  --card-deco: rgba(194, 150, 79, .24);
+  --card-bg-image:
+    radial-gradient(circle at 80% 14%, rgba(194, 150, 79, .24), transparent 42%),
+    repeating-linear-gradient(60deg, transparent 0 17px, rgba(87, 69, 44, .045) 17px 18px),
+    repeating-linear-gradient(120deg, transparent 0 17px, rgba(87, 69, 44, .045) 17px 18px);
+}
+
+/* Pink shades ----------------------------------------------------------- */
+.collector-card.is-blush {
+  --card-bg: #f7e4e1;
+  --card-ink: #5c3034;
+  --card-accent: #c76f74;
+  --card-muted: rgba(92, 48, 52, .66);
+  --card-line: rgba(92, 48, 52, .22);
+  --card-soft: rgba(92, 48, 52, .05);
+  --card-deco: rgba(199, 111, 116, .24);
+  --card-bg-image:
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, .6), transparent 40%),
+    repeating-linear-gradient(0deg, transparent 0 26px, rgba(92, 48, 52, .05) 26px 27px),
+    linear-gradient(150deg, transparent 55%, rgba(199, 111, 116, .12));
+}
+.collector-card.is-rose {
+  --card-bg: #f1d3d7;
+  --card-ink: #5c2130;
+  --card-accent: #ae3f57;
+  --card-muted: rgba(92, 33, 48, .66);
+  --card-line: rgba(92, 33, 48, .22);
+  --card-soft: rgba(92, 33, 48, .06);
+  --card-deco: rgba(174, 63, 87, .24);
+  --card-bg-image:
+    radial-gradient(circle at 76% 16%, rgba(255, 255, 255, .5), transparent 38%),
+    radial-gradient(circle at 20% 84%, rgba(174, 63, 87, .16), transparent 44%),
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(92, 33, 48, .04) 9px 10px);
+}
+.collector-card.is-petal {
+  --card-bg: #fbe3ef;
+  --card-ink: #5e2b47;
+  --card-accent: #cf6f9f;
+  --card-muted: rgba(94, 43, 71, .66);
+  --card-line: rgba(94, 43, 71, .22);
+  --card-soft: rgba(94, 43, 71, .05);
+  --card-deco: rgba(207, 111, 159, .24);
+  --card-bg-image:
+    radial-gradient(ellipse 26px 16px at 18% 20%, rgba(255, 255, 255, .55), transparent 70%),
+    radial-gradient(ellipse 20px 13px at 76% 30%, rgba(255, 255, 255, .45), transparent 70%),
+    radial-gradient(ellipse 22px 14px at 40% 76%, rgba(207, 111, 159, .16), transparent 70%),
+    radial-gradient(circle at 88% 86%, rgba(160, 120, 200, .16), transparent 34%);
+}
+.collector-card.is-cherry {
+  --card-bg: #f7cfd8;
+  --card-ink: #4e1728;
+  --card-accent: #e0476a;
+  --card-muted: rgba(78, 23, 40, .66);
+  --card-line: rgba(78, 23, 40, .22);
+  --card-soft: rgba(78, 23, 40, .06);
+  --card-deco: rgba(224, 71, 106, .26);
+  --card-bg-image:
+    radial-gradient(3px 3px at 16% 18%, rgba(78, 23, 40, .22), transparent 70%),
+    radial-gradient(3px 3px at 58% 12%, rgba(78, 23, 40, .18), transparent 70%),
+    radial-gradient(3px 3px at 86% 34%, rgba(78, 23, 40, .22), transparent 70%),
+    radial-gradient(3px 3px at 32% 56%, rgba(78, 23, 40, .16), transparent 70%),
+    radial-gradient(3px 3px at 72% 72%, rgba(78, 23, 40, .22), transparent 70%),
+    radial-gradient(3px 3px at 24% 88%, rgba(78, 23, 40, .18), transparent 70%),
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, .55), transparent 34%),
+    radial-gradient(circle at 12% 70%, rgba(224, 71, 106, .18), transparent 34%);
+}
+.collector-card.is-mauve {
+  --card-bg: #e8d6e4;
+  --card-ink: #45243f;
+  --card-accent: #9f5d90;
+  --card-muted: rgba(69, 36, 63, .66);
+  --card-line: rgba(69, 36, 63, .22);
+  --card-soft: rgba(69, 36, 63, .05);
+  --card-deco: rgba(159, 93, 144, .24);
+  --card-bg-image:
+    radial-gradient(circle at 78% 10%, rgba(255, 255, 255, .5), transparent 40%),
+    radial-gradient(circle at 16% 88%, rgba(120, 80, 130, .18), transparent 46%),
+    repeating-radial-gradient(circle at 40% 40%, transparent 0 4px, rgba(69, 36, 63, .04) 4px 5px);
+}
+
 .collector-card__inner {
   position: relative;
   width: 100%;
@@ -2290,7 +2502,21 @@ body.has-fallback-product .modal-product__body h2 {
   font-family: var(--hand-font);
   font-size: .72rem;
 }
-.card-style-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+.card-style-group { display: grid; gap: .5rem; }
+.card-style-group + .card-style-group { margin-top: 1rem; }
+.card-style-group__title {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--marker-font);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.card-style-group__title::after { content: ""; flex: 1; border-top: 1.5px dashed var(--line); }
+.card-style-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
 .card-swatch {
   --sw-bg: #233b35;
   --sw-ink: #f4ecdd;
@@ -2298,8 +2524,8 @@ body.has-fallback-product .modal-product__body h2 {
   position: relative;
   display: flex;
   align-items: center;
-  gap: .65rem;
-  padding: .55rem .6rem;
+  gap: .5rem;
+  padding: .45rem .5rem;
   border: 2px solid var(--line);
   border-radius: 14px 11px 15px 12px / 12px 15px 11px 14px;
   background: var(--paper-warm);
@@ -2323,11 +2549,26 @@ body.has-fallback-product .modal-product__body h2 {
 .card-swatch.is-moon { --sw-bg: #2b2341; --sw-ink: #f1e7db; --sw-accent: #cbb0e0; }
 .card-swatch.is-scrap { --sw-bg: #f8f1e3; --sw-ink: #3f3833; --sw-accent: #a5673f; }
 .card-swatch.is-bubble { --sw-bg: #f6dbe5; --sw-ink: #55283f; --sw-accent: #b0517c; }
+.card-swatch.is-void { --sw-bg: #121017; --sw-ink: #f3ead9; --sw-accent: #ff6b4a; }
+.card-swatch.is-ash { --sw-bg: #26231f; --sw-ink: #efe6d6; --sw-accent: #d9a05b; }
+.card-swatch.is-raven { --sw-bg: #141a26; --sw-ink: #e8ecf5; --sw-accent: #9fc4ff; }
+.card-swatch.is-rust { --sw-bg: #2a1612; --sw-ink: #f1e3d0; --sw-accent: #d9814f; }
+.card-swatch.is-crypt { --sw-bg: #14201a; --sw-ink: #e9efdd; --sw-accent: #a8e063; }
+.card-swatch.is-linen { --sw-bg: #ece5d6; --sw-ink: #3a4a45; --sw-accent: #7d9b8e; }
+.card-swatch.is-sage { --sw-bg: #e3e8d9; --sw-ink: #3d4a39; --sw-accent: #7c9469; }
+.card-swatch.is-clay { --sw-bg: #efdfd0; --sw-ink: #573a2f; --sw-accent: #b57d5f; }
+.card-swatch.is-fog { --sw-bg: #e6eaee; --sw-ink: #374049; --sw-accent: #7f95a9; }
+.card-swatch.is-honey { --sw-bg: #f4e9cf; --sw-ink: #57452c; --sw-accent: #c2964f; }
+.card-swatch.is-blush { --sw-bg: #f7e4e1; --sw-ink: #5c3034; --sw-accent: #c76f74; }
+.card-swatch.is-rose { --sw-bg: #f1d3d7; --sw-ink: #5c2130; --sw-accent: #ae3f57; }
+.card-swatch.is-petal { --sw-bg: #fbe3ef; --sw-ink: #5e2b47; --sw-accent: #cf6f9f; }
+.card-swatch.is-cherry { --sw-bg: #f7cfd8; --sw-ink: #4e1728; --sw-accent: #e0476a; }
+.card-swatch.is-mauve { --sw-bg: #e8d6e4; --sw-ink: #45243f; --sw-accent: #9f5d90; }
 .card-swatch__mini {
   position: relative;
   display: block;
-  width: 2.3rem;
-  height: 2.9rem;
+  width: 2rem;
+  height: 2.55rem;
   overflow: hidden;
   flex: none;
   border: 1.5px solid var(--sw-ink);
@@ -2358,10 +2599,18 @@ body.has-fallback-product .modal-product__body h2 {
 .card-swatch__text strong {
   color: var(--plum);
   font-family: var(--hand-font);
-  font-size: .84rem;
+  font-size: .8rem;
   font-weight: 700;
 }
-.card-swatch__text small { color: var(--muted); font-size: .64rem; line-height: 1.3; }
+.card-swatch__text small {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .62rem;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .card-style-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 .upload-grid { display: grid; gap: 1.05rem; }
@@ -2501,8 +2750,11 @@ body.has-fallback-product .modal-product__body h2 {
   .collector-card { width: min(100%, 340px); }
 }
 @media (max-width: 600px) {
-  .card-style-grid { grid-template-columns: 1fr; }
-  .card-style-grid > :last-child:nth-child(odd) { grid-column: auto; }
+  .card-style-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+  .card-swatch { gap: .4rem; padding: .4rem; }
+  .card-swatch__mini { width: 1.7rem; height: 2.2rem; }
+  .card-swatch__text strong { font-size: .74rem; }
+  .card-swatch__text small { font-size: .58rem; }
   .collector-card { width: min(100%, 318px); aspect-ratio: 3 / 4.2; }
   .collector-body { padding-inline: 1.1rem; }
   .account-head--split { align-items: flex-start; }

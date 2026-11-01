@@ -299,19 +299,25 @@ show_flash();
             <input type="hidden" name="action" value="update_card">
 
             <fieldset class="card-styles">
-              <legend>Card design <span>Five ways to be found</span></legend>
-              <div class="card-style-grid">
-                <?php foreach (RB_CARD_STYLES as $key => $meta): ?>
-                  <label class="card-swatch is-<?= e($key) ?>">
-                    <input type="radio" name="card_style" value="<?= e($key) ?>" data-card-style<?= $profile['card_style'] === $key ? ' checked' : '' ?>>
-                    <span class="card-swatch__mini" aria-hidden="true"><i></i></span>
-                    <span class="card-swatch__text">
-                      <strong><?= e($meta['label']) ?></strong>
-                      <small><?= e($meta['note']) ?></small>
-                    </span>
-                  </label>
-                <?php endforeach; ?>
-              </div>
+              <legend>Card design <span>Twenty ways to be found</span></legend>
+              <?php foreach (RB_CARD_STYLE_GROUPS as $groupKey => $groupLabel): ?>
+                <div class="card-style-group">
+                  <p class="card-style-group__title"><?= e($groupLabel) ?></p>
+                  <div class="card-style-grid">
+                    <?php foreach (RB_CARD_STYLES as $key => $meta): ?>
+                      <?php if (($meta['group'] ?? '') !== $groupKey) { continue; } ?>
+                      <label class="card-swatch is-<?= e($key) ?>">
+                        <input type="radio" name="card_style" value="<?= e($key) ?>" data-card-style<?= $profile['card_style'] === $key ? ' checked' : '' ?>>
+                        <span class="card-swatch__mini" aria-hidden="true"><i></i></span>
+                        <span class="card-swatch__text">
+                          <strong><?= e($meta['label']) ?></strong>
+                          <small><?= e($meta['note']) ?></small>
+                        </span>
+                      </label>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php endforeach; ?>
               <?php if (isset($cardErrors['card_style'])): ?><p class="field-error"><?= e($cardErrors['card_style']) ?></p><?php endif; ?>
             </fieldset>
 
@@ -340,8 +346,9 @@ show_flash();
                     <?php endif; ?>
                   </span>
                   <div class="upload-field__body">
-                    <input id="avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp" data-avatar-input <?= isset($cardErrors['avatar']) ? 'aria-invalid="true"' : '' ?>>
-                    <p class="field-hint">JPG, PNG or WebP · 200 × 200 minimum · up to 3 MB</p>
+                    <input id="avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp" data-avatar-input data-max-bytes="<?= rb_profile_upload_limit() ?>" <?= isset($cardErrors['avatar']) ? 'aria-invalid="true"' : '' ?>>
+                    <p class="field-hint">JPG, PNG or WebP · 200 × 200 minimum · up to <?= e(rb_format_bytes(rb_profile_upload_limit())) ?></p>
+                    <p class="field-error" data-upload-error hidden></p>
                     <?php if (isset($cardErrors['avatar'])): ?><p class="field-error"><?= e($cardErrors['avatar']) ?></p><?php endif; ?>
                     <?php if ($avatarUrl): ?>
                       <label class="check-line"><input type="checkbox" name="remove_avatar" value="1" data-avatar-remove> Remove current photo</label>
@@ -355,8 +362,9 @@ show_flash();
                 <div class="upload-field__row">
                   <span class="upload-thumb upload-thumb--wide" data-cover-thumb<?= $coverUrl ? ' style="background-image:url(' . e($coverUrl) . ')"' : '' ?>></span>
                   <div class="upload-field__body">
-                    <input id="cover" name="cover" type="file" accept="image/jpeg,image/png,image/webp" data-cover-input <?= isset($cardErrors['cover']) ? 'aria-invalid="true"' : '' ?>>
-                    <p class="field-hint">Wide images look best · 200 × 200 minimum · up to 3 MB</p>
+                    <input id="cover" name="cover" type="file" accept="image/jpeg,image/png,image/webp" data-cover-input data-max-bytes="<?= rb_profile_upload_limit() ?>" <?= isset($cardErrors['cover']) ? 'aria-invalid="true"' : '' ?>>
+                    <p class="field-hint">Wide images look best · 200 × 200 minimum · up to <?= e(rb_format_bytes(rb_profile_upload_limit())) ?></p>
+                    <p class="field-error" data-upload-error hidden></p>
                     <?php if (isset($cardErrors['cover'])): ?><p class="field-error"><?= e($cardErrors['cover']) ?></p><?php endif; ?>
                     <?php if ($coverUrl): ?>
                       <label class="check-line"><input type="checkbox" name="remove_cover" value="1" data-cover-remove> Remove current cover</label>
