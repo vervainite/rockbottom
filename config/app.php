@@ -33,6 +33,12 @@ define('RB_CARD_STYLES', [
     'petal'  => ['label' => 'Petal Press',   'note' => 'Pressed petals and lilac fizz.',    'group' => 'pink'],
     'cherry' => ['label' => 'Cherry Fizz',   'note' => 'Soda pink and cherry dots.',        'group' => 'pink'],
     'mauve'  => ['label' => 'Mauve Hour',    'note' => 'Dusk mauve and soft plum.',         'group' => 'pink'],
+
+    'slate'    => ['label' => 'Slate Storm',    'note' => 'Grey peaks and drifting veil.',  'group' => 'stone'],
+    'cinder'   => ['label' => 'Cinder Smoke',   'note' => 'Ash ridge under warm char.',     'group' => 'stone'],
+    'obsidian' => ['label' => 'Obsidian Vein',  'note' => 'Black monolith, bone crystal.',  'group' => 'stone'],
+    'quarry'   => ['label' => 'Quarry Dust',    'note' => 'Cut stone and dusty haze.',      'group' => 'stone'],
+    'wraith'   => ['label' => 'Smoke Wraith',   'note' => 'Pale fog, drowned peaks.',       'group' => 'stone'],
 ]);
 
 define('RB_CARD_STYLE_GROUPS', [
@@ -40,6 +46,7 @@ define('RB_CARD_STYLE_GROUPS', [
     'dark'  => 'Darker & edgier',
     'soft'  => 'Soft focus',
     'pink'  => 'Pink shades',
+    'stone' => 'Smoke & stone',
 ]);
 
 define('RB_PROFILE_UPLOAD_MAX', 5 * 1024 * 1024);

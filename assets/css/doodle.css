@@ -2196,6 +2196,103 @@ body.has-fallback-product .modal-product__body h2 {
     repeating-radial-gradient(circle at 40% 40%, transparent 0 4px, rgba(69, 36, 63, .04) 4px 5px);
 }
 
+/* Smoke & stone ---------------------------------------------------------- */
+.collector-card.is-slate {
+  --card-bg: #2a2c2f;
+  --card-ink: #eceae4;
+  --card-accent: #b6c2c9;
+  --card-muted: rgba(236, 234, 228, .64);
+  --card-line: rgba(236, 234, 228, .22);
+  --card-soft: rgba(236, 234, 228, .08);
+  --card-deco: rgba(182, 194, 201, .3);
+  --card-art-pos: 74% center;
+  --card-bg-image:
+    linear-gradient(180deg, rgba(12, 12, 14, .04) 0%, rgba(12, 12, 14, .14) 27%, rgba(12, 12, 14, .56) 41%, rgba(12, 12, 14, .82) 62%, rgba(12, 12, 14, .93) 100%),
+    url('../images/cards/card-slate-storm.webp');
+  --card-bg-image-back:
+    linear-gradient(180deg, rgba(10, 10, 12, .6) 0%, rgba(10, 10, 12, .74) 46%, rgba(10, 10, 12, .92) 100%),
+    url('../images/cards/card-slate-storm.webp');
+}
+.collector-card.is-cinder {
+  --card-bg: #2b2724;
+  --card-ink: #f0e9df;
+  --card-accent: #cbb9a6;
+  --card-muted: rgba(240, 233, 223, .62);
+  --card-line: rgba(240, 233, 223, .22);
+  --card-soft: rgba(240, 233, 223, .07);
+  --card-deco: rgba(203, 185, 166, .28);
+  --card-art-pos: 42% center;
+  --card-bg-image:
+    linear-gradient(180deg, rgba(14, 12, 11, .04) 0%, rgba(14, 12, 11, .16) 27%, rgba(14, 12, 11, .58) 41%, rgba(14, 12, 11, .84) 62%, rgba(14, 12, 11, .94) 100%),
+    url('../images/cards/card-cinder-smoke.webp');
+  --card-bg-image-back:
+    linear-gradient(180deg, rgba(12, 10, 9, .6) 0%, rgba(12, 10, 9, .75) 46%, rgba(12, 10, 9, .92) 100%),
+    url('../images/cards/card-cinder-smoke.webp');
+}
+.collector-card.is-obsidian {
+  --card-bg: #15141a;
+  --card-ink: #ece8f1;
+  --card-accent: #a79db5;
+  --card-muted: rgba(236, 232, 241, .6);
+  --card-line: rgba(236, 232, 241, .2);
+  --card-soft: rgba(236, 232, 241, .07);
+  --card-deco: rgba(167, 157, 181, .3);
+  --card-art-pos: 50% center;
+  --card-bg-image:
+    linear-gradient(180deg, rgba(6, 5, 8, .05) 0%, rgba(6, 5, 8, .18) 27%, rgba(6, 5, 8, .6) 41%, rgba(6, 5, 8, .85) 62%, rgba(6, 5, 8, .95) 100%),
+    url('../images/cards/card-obsidian-vein.webp');
+  --card-bg-image-back:
+    linear-gradient(180deg, rgba(5, 4, 7, .62) 0%, rgba(5, 4, 7, .76) 46%, rgba(5, 4, 7, .93) 100%),
+    url('../images/cards/card-obsidian-vein.webp');
+}
+.collector-card.is-quarry {
+  --card-bg: #35322d;
+  --card-ink: #efe8da;
+  --card-accent: #c6b398;
+  --card-muted: rgba(239, 232, 218, .66);
+  --card-line: rgba(239, 232, 218, .24);
+  --card-soft: rgba(239, 232, 218, .08);
+  --card-deco: rgba(198, 179, 152, .3);
+  --card-art-pos: 38% center;
+  --card-bg-image:
+    linear-gradient(180deg, rgba(16, 14, 12, .04) 0%, rgba(16, 14, 12, .16) 27%, rgba(16, 14, 12, .58) 41%, rgba(16, 14, 12, .84) 62%, rgba(16, 14, 12, .94) 100%),
+    url('../images/cards/card-quarry-dust.webp');
+  --card-bg-image-back:
+    linear-gradient(180deg, rgba(14, 12, 10, .6) 0%, rgba(14, 12, 10, .75) 46%, rgba(14, 12, 10, .92) 100%),
+    url('../images/cards/card-quarry-dust.webp');
+}
+.collector-card.is-wraith {
+  --card-bg: #3a3c3e;
+  --card-ink: #f1efeb;
+  --card-accent: #bcc5c9;
+  --card-muted: rgba(241, 239, 235, .66);
+  --card-line: rgba(241, 239, 235, .24);
+  --card-soft: rgba(241, 239, 235, .09);
+  --card-deco: rgba(188, 197, 201, .3);
+  --card-art-pos: 30% center;
+  --card-bg-image:
+    linear-gradient(180deg, rgba(18, 18, 20, .04) 0%, rgba(18, 18, 20, .16) 27%, rgba(18, 18, 20, .6) 41%, rgba(18, 18, 20, .86) 62%, rgba(18, 18, 20, .94) 100%),
+    url('../images/cards/card-smoke-wraith.webp');
+  --card-bg-image-back:
+    linear-gradient(180deg, rgba(16, 16, 18, .62) 0%, rgba(16, 16, 18, .76) 46%, rgba(16, 16, 18, .93) 100%),
+    url('../images/cards/card-smoke-wraith.webp');
+}
+.collector-card:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .collector-cover {
+  background-color: transparent;
+  background-image: none;
+}
+.collector-card:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .collector-cover__tag,
+.collector-card:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .collector-cover__edition {
+  background: rgba(20, 19, 22, .62);
+  border-color: rgba(236, 234, 228, .3);
+  color: #f2efe9;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.collector-card:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .collector-cover__edition {
+  color: var(--card-accent);
+}
+
 .collector-card__inner {
   position: relative;
   width: 100%;
@@ -2217,6 +2314,8 @@ body.has-fallback-product .modal-product__body h2 {
   border-radius: 22px 17px 24px 19px / 19px 24px 17px 22px;
   background-color: var(--card-bg);
   background-image: var(--card-bg-image, none);
+  background-size: cover;
+  background-position: var(--card-art-pos, center);
   color: var(--card-ink);
   box-shadow: 8px 9px 0 rgba(48, 32, 45, .22);
   backface-visibility: hidden;
@@ -2425,6 +2524,7 @@ body.has-fallback-product .modal-product__body h2 {
   transform: rotateY(180deg);
   justify-content: space-between;
   padding: 1.5rem 1.4rem 1.3rem;
+  background-image: var(--card-bg-image-back, var(--card-bg-image, none));
 }
 .collector-back__kicker {
   color: var(--card-accent);
@@ -2564,6 +2664,24 @@ body.has-fallback-product .modal-product__body h2 {
 .card-swatch.is-petal { --sw-bg: #fbe3ef; --sw-ink: #5e2b47; --sw-accent: #cf6f9f; }
 .card-swatch.is-cherry { --sw-bg: #f7cfd8; --sw-ink: #4e1728; --sw-accent: #e0476a; }
 .card-swatch.is-mauve { --sw-bg: #e8d6e4; --sw-ink: #45243f; --sw-accent: #9f5d90; }
+.card-swatch.is-slate { --sw-bg: #2a2c2f; --sw-ink: #eceae4; --sw-accent: #b6c2c9; }
+.card-swatch.is-cinder { --sw-bg: #2b2724; --sw-ink: #f0e9df; --sw-accent: #cbb9a6; }
+.card-swatch.is-obsidian { --sw-bg: #15141a; --sw-ink: #ece8f1; --sw-accent: #a79db5; }
+.card-swatch.is-quarry { --sw-bg: #35322d; --sw-ink: #efe8da; --sw-accent: #c6b398; }
+.card-swatch.is-wraith { --sw-bg: #3a3c3e; --sw-ink: #f1efeb; --sw-accent: #bcc5c9; }
+.card-swatch.is-slate .card-swatch__mini { background-image: url('../images/cards/card-slate-storm.webp'); }
+.card-swatch.is-cinder .card-swatch__mini { background-image: url('../images/cards/card-cinder-smoke.webp'); }
+.card-swatch.is-obsidian .card-swatch__mini { background-image: url('../images/cards/card-obsidian-vein.webp'); }
+.card-swatch.is-quarry .card-swatch__mini { background-image: url('../images/cards/card-quarry-dust.webp'); }
+.card-swatch.is-wraith .card-swatch__mini { background-image: url('../images/cards/card-smoke-wraith.webp'); }
+.card-swatch:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .card-swatch__mini {
+  background-color: var(--sw-bg);
+  background-repeat: no-repeat;
+  background-size: 100% 52%;
+  background-position: center top;
+}
+.card-swatch:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .card-swatch__mini::before,
+.card-swatch:is(.is-slate, .is-cinder, .is-obsidian, .is-quarry, .is-wraith) .card-swatch__mini i { display: none; }
 .card-swatch__mini {
   position: relative;
   display: block;

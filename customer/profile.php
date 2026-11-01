@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $cardErrors['name'] = 'Please enter the name on your card.';
         }
         if (!isset(RB_CARD_STYLES[$style])) {
-            $cardErrors['card_style'] = 'Choose one of the five card designs.';
+            $cardErrors['card_style'] = 'Choose one of the card designs.';
         }
 
         $oldAvatar = is_string($profile['avatar'] ?? null) ? $profile['avatar'] : null;
@@ -299,7 +299,7 @@ show_flash();
             <input type="hidden" name="action" value="update_card">
 
             <fieldset class="card-styles">
-              <legend>Card design <span>Twenty ways to be found</span></legend>
+              <legend>Card design <span>Twenty-five ways to be found</span></legend>
               <?php foreach (RB_CARD_STYLE_GROUPS as $groupKey => $groupLabel): ?>
                 <div class="card-style-group">
                   <p class="card-style-group__title"><?= e($groupLabel) ?></p>
